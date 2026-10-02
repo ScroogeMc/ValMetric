@@ -1,0 +1,1994 @@
+{
+  "ascent": {
+    "name": "Ascent",
+    "uuid": "7eaecc1b-4337-bbf6-6ab9-04b8f06b3319",
+    "xMultiplier": 0.00007,
+    "yMultiplier": -0.00007,
+    "xScalarToAdd": 0.813895,
+    "yScalarToAdd": 0.573242,
+    "displayIconUrl": "https://media.valorant-api.com/maps/7eaecc1b-4337-bbf6-6ab9-04b8f06b3319/displayicon.png",
+    "localIcon": "/src/assets/maps/ascent.png",
+    "callouts": [
+      {
+        "regionName": "Tree",
+        "superRegionName": "A",
+        "fullName": "A Tree",
+        "gameLocation": {
+          "x": 3980.9062,
+          "y": -5938.758,
+          "z": 400.00003
+        },
+        "pctX": 39.818194000000005,
+        "pctY": 29.457856600000003
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 4489.032,
+          "y": -3014.0515,
+          "z": 400
+        },
+        "pctX": 60.2911395,
+        "pctY": 25.900976000000004
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "A",
+        "fullName": "A Main",
+        "gameLocation": {
+          "x": 5321.6206,
+          "y": -4710.1274,
+          "z": 399.99994
+        },
+        "pctX": 48.4186082,
+        "pctY": 20.072855800000006
+      },
+      {
+        "regionName": "Window",
+        "superRegionName": "A",
+        "fullName": "A Window",
+        "gameLocation": {
+          "x": 4023.0244,
+          "y": -8180.692,
+          "z": 803.03015
+        },
+        "pctX": 24.124656000000012,
+        "pctY": 29.163029200000008
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 6153.585,
+          "y": -6626.2114,
+          "z": 499.99933
+        },
+        "pctX": 35.0060202,
+        "pctY": 14.249105000000007
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 60,
+          "y": 50,
+          "z": 190
+        },
+        "pctX": 81.73949999999999,
+        "pctY": 56.9042
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "B",
+        "fullName": "B Lobby",
+        "gameLocation": {
+          "x": -1490.5864,
+          "y": -1389.9706,
+          "z": 199.99994
+        },
+        "pctX": 71.65970580000001,
+        "pctY": 67.7583048
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "B",
+        "fullName": "B Main",
+        "gameLocation": {
+          "x": -1983.6713,
+          "y": -5840.8125,
+          "z": 100
+        },
+        "pctX": 40.50381250000001,
+        "pctY": 71.2098991
+      },
+      {
+        "regionName": "Boat House",
+        "superRegionName": "B",
+        "fullName": "B Boat House",
+        "gameLocation": {
+          "x": -4484.774,
+          "y": -7763.3584,
+          "z": -105.08359
+        },
+        "pctX": 27.045991200000007,
+        "pctY": 88.717618
+      },
+      {
+        "regionName": "Bottom",
+        "superRegionName": "Mid",
+        "fullName": "Mid Bottom",
+        "gameLocation": {
+          "x": 1122.2262,
+          "y": -5951.704,
+          "z": 200.00006
+        },
+        "pctX": 39.72757200000001,
+        "pctY": 49.468616600000004
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": -2344.065,
+          "y": -7548.511,
+          "z": 99.33539
+        },
+        "pctX": 28.54992300000001,
+        "pctY": 73.73265500000001
+      },
+      {
+        "regionName": "Catwalk",
+        "superRegionName": "Mid",
+        "fullName": "Mid Catwalk",
+        "gameLocation": {
+          "x": 2315.7944,
+          "y": -4127.2554,
+          "z": 415.80453
+        },
+        "pctX": 52.49871220000001,
+        "pctY": 41.1136392
+      },
+      {
+        "regionName": "Cubby",
+        "superRegionName": "Mid",
+        "fullName": "Mid Cubby",
+        "gameLocation": {
+          "x": 3387.3167,
+          "y": -5129.764,
+          "z": 400.00037
+        },
+        "pctX": 45.48115200000001,
+        "pctY": 33.61298310000001
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 1995.2354,
+          "y": -9744.923,
+          "z": 300.0053
+        },
+        "pctX": 13.175039,
+        "pctY": 43.35755220000001
+      },
+      {
+        "regionName": "Garden",
+        "superRegionName": "A",
+        "fullName": "A Garden",
+        "gameLocation": {
+          "x": 3773.6653,
+          "y": -7551.3535,
+          "z": 570.3553
+        },
+        "pctX": 28.53002550000001,
+        "pctY": 30.9085429
+      },
+      {
+        "regionName": "Market",
+        "superRegionName": "Mid",
+        "fullName": "Mid Market",
+        "gameLocation": {
+          "x": 1089.1044,
+          "y": -7363.1914,
+          "z": 306.9743
+        },
+        "pctX": 29.847160200000012,
+        "pctY": 49.7004692
+      },
+      {
+        "regionName": "Courtyard",
+        "superRegionName": "Mid",
+        "fullName": "Mid Courtyard",
+        "gameLocation": {
+          "x": 1222.7029,
+          "y": -4586.6,
+          "z": 200.13477
+        },
+        "pctX": 49.283300000000004,
+        "pctY": 48.7652797
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "Mid",
+        "fullName": "Mid Link",
+        "gameLocation": {
+          "x": -632.0929,
+          "y": -4280.2573,
+          "z": 200.00018
+        },
+        "pctX": 51.42769890000001,
+        "pctY": 61.7488503
+      },
+      {
+        "regionName": "Pizza",
+        "superRegionName": "Mid",
+        "fullName": "Mid Pizza",
+        "gameLocation": {
+          "x": 1801.5667,
+          "y": -7262.1704,
+          "z": 300.00006
+        },
+        "pctX": 30.554307200000007,
+        "pctY": 44.713233100000004
+      },
+      {
+        "regionName": "Rafters",
+        "superRegionName": "A",
+        "fullName": "A Rafters",
+        "gameLocation": {
+          "x": 6129.893,
+          "y": -8210,
+          "z": 806.1185
+        },
+        "pctX": 23.919500000000006,
+        "pctY": 14.414949000000005
+      },
+      {
+        "regionName": "Top",
+        "superRegionName": "Mid",
+        "fullName": "Mid Top",
+        "gameLocation": {
+          "x": 2753.9297,
+          "y": -2129.6155,
+          "z": 400
+        },
+        "pctX": 66.48219150000001,
+        "pctY": 38.0466921
+      },
+      {
+        "regionName": "Wine",
+        "superRegionName": "A",
+        "fullName": "A Wine",
+        "gameLocation": {
+          "x": 7358.7407,
+          "y": -4689.2705,
+          "z": 300.00034
+        },
+        "pctX": 48.56460650000001,
+        "pctY": 5.813015100000007
+      }
+    ]
+  },
+  "split": {
+    "name": "Split",
+    "uuid": "d960549e-485c-e861-8d71-aa9d1aed12a2",
+    "xMultiplier": 0.000078,
+    "yMultiplier": -0.000078,
+    "xScalarToAdd": 0.842188,
+    "yScalarToAdd": 0.697578,
+    "displayIconUrl": "https://media.valorant-api.com/maps/d960549e-485c-e861-8d71-aa9d1aed12a2/displayicon.png",
+    "localIcon": "/src/assets/maps/split.png",
+    "callouts": [
+      {
+        "regionName": "Back",
+        "superRegionName": "A",
+        "fullName": "A Back",
+        "gameLocation": {
+          "x": 7345.049,
+          "y": -7858.0405,
+          "z": -0.001953125
+        },
+        "pctX": 22.92608410000001,
+        "pctY": 12.466417800000007
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 6814.217,
+          "y": -2457.7468,
+          "z": 300
+        },
+        "pctX": 65.04837496,
+        "pctY": 16.606907400000004
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "A",
+        "fullName": "A Main",
+        "gameLocation": {
+          "x": 6279.9795,
+          "y": -4492.833,
+          "z": 199.95233
+        },
+        "pctX": 49.17470260000001,
+        "pctY": 20.7739599
+      },
+      {
+        "regionName": "Rafters",
+        "superRegionName": "A",
+        "fullName": "A Rafters",
+        "gameLocation": {
+          "x": 5434.726,
+          "y": -6258.442,
+          "z": 549.9768
+        },
+        "pctX": 35.402952400000004,
+        "pctY": 27.36693720000001
+      },
+      {
+        "regionName": "Ramps",
+        "superRegionName": "A",
+        "fullName": "A Ramps",
+        "gameLocation": {
+          "x": 4330,
+          "y": -4750,
+          "z": 590
+        },
+        "pctX": 47.168800000000005,
+        "pctY": 35.9838
+      },
+      {
+        "regionName": "Screens",
+        "superRegionName": "A",
+        "fullName": "A Screens",
+        "gameLocation": {
+          "x": 5648.7144,
+          "y": -8868.611,
+          "z": 200.00006
+        },
+        "pctX": 15.0436342,
+        "pctY": 25.697827680000007
+      },
+      {
+        "regionName": "Sewer",
+        "superRegionName": "A",
+        "fullName": "A Sewer",
+        "gameLocation": {
+          "x": 4862.6064,
+          "y": -2367.2578,
+          "z": 59.34729
+        },
+        "pctX": 65.75418916000001,
+        "pctY": 31.829470080000004
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 6588.6597,
+          "y": -6761.131,
+          "z": 100.00012
+        },
+        "pctX": 31.481978200000004,
+        "pctY": 18.366254339999998
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "A",
+        "fullName": "A Tower",
+        "gameLocation": {
+          "x": 4636.7925,
+          "y": -6748.2334,
+          "z": 650.00006
+        },
+        "pctX": 31.582579480000007,
+        "pctY": 33.59081850000001
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 1901.97,
+          "y": 59.588867,
+          "z": 300.00012
+        },
+        "pctX": 84.6835931626,
+        "pctY": 54.92243400000001
+      },
+      {
+        "regionName": "Alley",
+        "superRegionName": "B",
+        "fullName": "B Alley",
+        "gameLocation": {
+          "x": -1158.0048,
+          "y": -8066.301,
+          "z": 399.99982
+        },
+        "pctX": 21.3016522,
+        "pctY": 78.79023744
+      },
+      {
+        "regionName": "Back",
+        "superRegionName": "B",
+        "fullName": "B Back",
+        "gameLocation": {
+          "x": -3107.181,
+          "y": -7417.2607,
+          "z": 300.00012
+        },
+        "pctX": 26.36416654000001,
+        "pctY": 93.9938118
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "B",
+        "fullName": "B Link",
+        "gameLocation": {
+          "x": -27.670135,
+          "y": -2369.784,
+          "z": 349.99997
+        },
+        "pctX": 65.7344848,
+        "pctY": 69.973627053
+      },
+      {
+        "regionName": "Garage",
+        "superRegionName": "B",
+        "fullName": "B Garage",
+        "gameLocation": {
+          "x": -2190.7827,
+          "y": -3848.0293,
+          "z": 300.00018
+        },
+        "pctX": 54.204171460000005,
+        "pctY": 86.84590506
+      },
+      {
+        "regionName": "Rafters",
+        "superRegionName": "B",
+        "fullName": "B Rafters",
+        "gameLocation": {
+          "x": -637.1397,
+          "y": -6070.6167,
+          "z": 922.2615
+        },
+        "pctX": 36.867989740000006,
+        "pctY": 74.72748966
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": -2167.2456,
+          "y": -6264.7715,
+          "z": 399.99982
+        },
+        "pctX": 35.35358230000001,
+        "pctY": 86.66231568
+      },
+      {
+        "regionName": "Stairs",
+        "superRegionName": "B",
+        "fullName": "B Stairs",
+        "gameLocation": {
+          "x": 1061.493,
+          "y": -6760.976,
+          "z": 839.9651
+        },
+        "pctX": 31.483187200000007,
+        "pctY": 61.4781546
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "B",
+        "fullName": "B Tower",
+        "gameLocation": {
+          "x": 168.89589,
+          "y": -5290.194,
+          "z": 900
+        },
+        "pctX": 42.9552868,
+        "pctY": 68.44041205799999
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "B",
+        "fullName": "B Lobby",
+        "gameLocation": {
+          "x": -1271.6421,
+          "y": -1983.6248,
+          "z": 300.00012
+        },
+        "pctX": 68.74652655999999,
+        "pctY": 79.67660838
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 2142.3635,
+          "y": -8964.969,
+          "z": 500.00012
+        },
+        "pctX": 14.29204180000001,
+        "pctY": 53.0473647
+      },
+      {
+        "regionName": "Bottom",
+        "superRegionName": "Mid",
+        "fullName": "Mid Bottom",
+        "gameLocation": {
+          "x": 1922.6552,
+          "y": -2899.4626,
+          "z": 450
+        },
+        "pctX": 61.60299172000001,
+        "pctY": 54.76108944
+      },
+      {
+        "regionName": "Mail",
+        "superRegionName": "Mid",
+        "fullName": "Mid Mail",
+        "gameLocation": {
+          "x": 1155.3333,
+          "y": -4808.6436,
+          "z": 800.00024
+        },
+        "pctX": 46.71137992,
+        "pctY": 60.74620026
+      },
+      {
+        "regionName": "Top",
+        "superRegionName": "Mid",
+        "fullName": "Mid Top",
+        "gameLocation": {
+          "x": 2021.9575,
+          "y": -4596.936,
+          "z": 649.9999
+        },
+        "pctX": 48.36269920000001,
+        "pctY": 53.9865315
+      },
+      {
+        "regionName": "Vent",
+        "superRegionName": "Mid",
+        "fullName": "Mid Vent",
+        "gameLocation": {
+          "x": 3155.1648,
+          "y": -5338.5215,
+          "z": 650
+        },
+        "pctX": 42.57833230000001,
+        "pctY": 45.147514560000005
+      }
+    ]
+  },
+  "bind": {
+    "name": "Bind",
+    "uuid": "2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba",
+    "xMultiplier": 0.000059,
+    "yMultiplier": -0.000059,
+    "xScalarToAdd": 0.576941,
+    "yScalarToAdd": 0.967566,
+    "displayIconUrl": "https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/displayicon.png",
+    "localIcon": "/src/assets/maps/bind.png",
+    "callouts": [
+      {
+        "regionName": "Exit",
+        "superRegionName": "A",
+        "fullName": "A Exit",
+        "gameLocation": {
+          "x": 7550.4106,
+          "y": 5874.497,
+          "z": 199.99945
+        },
+        "pctX": 92.3536323,
+        "pctY": 52.20917746
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "A",
+        "fullName": "A Link",
+        "gameLocation": {
+          "x": 6365.635,
+          "y": -1007.0208,
+          "z": 200.07816
+        },
+        "pctX": 51.75267728,
+        "pctY": 59.19935350000001
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 6113.239,
+          "y": 3158.823,
+          "z": 102.29004
+        },
+        "pctX": 76.3311557,
+        "pctY": 60.68848990000001
+      },
+      {
+        "regionName": "Short",
+        "superRegionName": "A",
+        "fullName": "A Short",
+        "gameLocation": {
+          "x": 7983.3467,
+          "y": 803.96063,
+          "z": 199.99988
+        },
+        "pctX": 62.437467717000004,
+        "pctY": 49.654854470000004
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 10747.902,
+          "y": 2664.4436,
+          "z": 100.00122
+        },
+        "pctX": 73.41431724,
+        "pctY": 33.3439782
+      },
+      {
+        "regionName": "Teleporter",
+        "superRegionName": "A",
+        "fullName": "A Teleporter",
+        "gameLocation": {
+          "x": 9432.303,
+          "y": 489.8803,
+          "z": 199.99976
+        },
+        "pctX": 60.58439377,
+        "pctY": 41.1060123
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 161.64832,
+          "y": 77.51108,
+          "z": -189.89374
+        },
+        "pctX": 58.151415372,
+        "pctY": 95.80287491200001
+      },
+      {
+        "regionName": "Exit",
+        "superRegionName": "B",
+        "fullName": "B Exit",
+        "gameLocation": {
+          "x": 8921.412,
+          "y": -1763.2295,
+          "z": 506.03943
+        },
+        "pctX": 47.291045950000004,
+        "pctY": 44.12026920000001
+      },
+      {
+        "regionName": "Hall",
+        "superRegionName": "B",
+        "fullName": "B Hall",
+        "gameLocation": {
+          "x": 12981.879,
+          "y": -4941.7544,
+          "z": 299.99988
+        },
+        "pctX": 28.537749040000005,
+        "pctY": 20.16351390000001
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "B",
+        "fullName": "B Link",
+        "gameLocation": {
+          "x": 6361.57,
+          "y": -2621.1829,
+          "z": 300.99994
+        },
+        "pctX": 42.229120890000004,
+        "pctY": 59.22333700000001
+      },
+      {
+        "regionName": "Fountain",
+        "superRegionName": "B",
+        "fullName": "B Fountain",
+        "gameLocation": {
+          "x": 5737.1484,
+          "y": -5390.446,
+          "z": 106.56543
+        },
+        "pctX": 25.890468600000005,
+        "pctY": 62.90742444000001
+      },
+      {
+        "regionName": "Long",
+        "superRegionName": "B",
+        "fullName": "B Long",
+        "gameLocation": {
+          "x": 7666.669,
+          "y": -6512.8022,
+          "z": 267.8717
+        },
+        "pctX": 19.268567020000006,
+        "pctY": 51.5232529
+      },
+      {
+        "regionName": "Short",
+        "superRegionName": "B",
+        "fullName": "B Short",
+        "gameLocation": {
+          "x": 7424.1313,
+          "y": -3056.4531,
+          "z": 361.01733
+        },
+        "pctX": 39.66102671,
+        "pctY": 52.95422533000001
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": 11108.108,
+          "y": -4831.4585,
+          "z": 366.8642
+        },
+        "pctX": 29.18849485000001,
+        "pctY": 31.21876280000001
+      },
+      {
+        "regionName": "Teleporter",
+        "superRegionName": "B",
+        "fullName": "B Teleporter",
+        "gameLocation": {
+          "x": 9027.776,
+          "y": -7223.8066,
+          "z": 299.99982
+        },
+        "pctX": 15.073641060000003,
+        "pctY": 43.4927216
+      },
+      {
+        "regionName": "Window",
+        "superRegionName": "B",
+        "fullName": "B Window",
+        "gameLocation": {
+          "x": 8826.788,
+          "y": -4309.4116,
+          "z": 499.9999
+        },
+        "pctX": 32.268571560000005,
+        "pctY": 44.678550800000004
+      },
+      {
+        "regionName": "Bath",
+        "superRegionName": "A",
+        "fullName": "A Bath",
+        "gameLocation": {
+          "x": 9106.541,
+          "y": 4449.6587,
+          "z": 99.99982
+        },
+        "pctX": 83.94708633,
+        "pctY": 43.028008100000015
+      },
+      {
+        "regionName": "Cave",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Cave",
+        "gameLocation": {
+          "x": 3920.3887,
+          "y": 256.94193,
+          "z": 102.05325
+        },
+        "pctX": 59.210057387000006,
+        "pctY": 73.62630667
+      },
+      {
+        "regionName": "Cubby",
+        "superRegionName": "A",
+        "fullName": "A Cubby",
+        "gameLocation": {
+          "x": 8605.168,
+          "y": 174.89832,
+          "z": 199.99986
+        },
+        "pctX": 58.726000088000006,
+        "pctY": 45.986108800000004
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 14641.918,
+          "y": -1017.6743,
+          "z": 100.00006
+        },
+        "pctX": 51.68982163,
+        "pctY": 10.369283800000007
+      },
+      {
+        "regionName": "Elbow",
+        "superRegionName": "B",
+        "fullName": "B Elbow",
+        "gameLocation": {
+          "x": 11212.901,
+          "y": -7095.3335,
+          "z": 303.7767
+        },
+        "pctX": 15.831632350000008,
+        "pctY": 30.600484100000003
+      },
+      {
+        "regionName": "Garden",
+        "superRegionName": "B",
+        "fullName": "B Garden",
+        "gameLocation": {
+          "x": 9144.103,
+          "y": -5598.1274,
+          "z": 300.0008
+        },
+        "pctX": 24.665148340000005,
+        "pctY": 42.806392300000006
+      },
+      {
+        "regionName": "Lamps",
+        "superRegionName": "A",
+        "fullName": "A Lamps",
+        "gameLocation": {
+          "x": 10649.471,
+          "y": 79.904434,
+          "z": 204.44678
+        },
+        "pctX": 58.165536160600006,
+        "pctY": 33.92472110000001
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "A",
+        "fullName": "A Tower",
+        "gameLocation": {
+          "x": 12872.583,
+          "y": 2556.7708,
+          "z": 399.99994
+        },
+        "pctX": 72.77904772,
+        "pctY": 20.808360300000007
+      }
+    ]
+  },
+  "abyss": {
+    "name": "Abyss",
+    "uuid": "224b0a95-48b9-f703-1bd8-67aca101a61f",
+    "xMultiplier": 0.000081,
+    "yMultiplier": -0.000081,
+    "xScalarToAdd": 0.5,
+    "yScalarToAdd": 0.5,
+    "displayIconUrl": "https://media.valorant-api.com/maps/224b0a95-48b9-f703-1bd8-67aca101a61f/displayicon.png",
+    "localIcon": "/src/assets/maps/abyss.png",
+    "callouts": [
+      {
+        "regionName": "Bridge",
+        "superRegionName": "A",
+        "fullName": "A Bridge",
+        "gameLocation": {
+          "x": 5700,
+          "y": -375,
+          "z": 900
+        },
+        "pctX": 46.9625,
+        "pctY": 3.83
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "A",
+        "fullName": "A Link",
+        "gameLocation": {
+          "x": 2800,
+          "y": -2450,
+          "z": 1075
+        },
+        "pctX": 30.154999999999998,
+        "pctY": 27.32
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 3250,
+          "y": 3400,
+          "z": 975
+        },
+        "pctX": 77.54,
+        "pctY": 23.674999999999997
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "A",
+        "fullName": "A Main",
+        "gameLocation": {
+          "x": 3800,
+          "y": 1650,
+          "z": 975
+        },
+        "pctX": 63.365,
+        "pctY": 19.22
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 4300,
+          "y": -200,
+          "z": 800
+        },
+        "pctX": 48.38,
+        "pctY": 15.17
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 950,
+          "y": 4950,
+          "z": 850
+        },
+        "pctX": 90.095,
+        "pctY": 42.305
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "A",
+        "fullName": "A Tower",
+        "gameLocation": {
+          "x": 3025,
+          "y": -125,
+          "z": 1350
+        },
+        "pctX": 48.9875,
+        "pctY": 25.497499999999995
+      },
+      {
+        "regionName": "Bend",
+        "superRegionName": "Mid",
+        "fullName": "Mid Bend",
+        "gameLocation": {
+          "x": -1700,
+          "y": 1075,
+          "z": 950
+        },
+        "pctX": 58.7075,
+        "pctY": 63.77
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "B",
+        "fullName": "B Link",
+        "gameLocation": {
+          "x": -2000,
+          "y": -2350,
+          "z": 925
+        },
+        "pctX": 30.964999999999996,
+        "pctY": 66.2
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "B",
+        "fullName": "B Lobby",
+        "gameLocation": {
+          "x": -3650,
+          "y": 4025,
+          "z": 400
+        },
+        "pctX": 82.6025,
+        "pctY": 79.565
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "B",
+        "fullName": "B Main",
+        "gameLocation": {
+          "x": -4450,
+          "y": 1525,
+          "z": 525
+        },
+        "pctX": 62.3525,
+        "pctY": 86.04499999999999
+      },
+      {
+        "regionName": "Nest",
+        "superRegionName": "B",
+        "fullName": "B Nest",
+        "gameLocation": {
+          "x": -4975,
+          "y": 2150,
+          "z": 900
+        },
+        "pctX": 67.415,
+        "pctY": 90.29750000000001
+      },
+      {
+        "regionName": "Bottom",
+        "superRegionName": "Mid",
+        "fullName": "Mid Bottom",
+        "gameLocation": {
+          "x": -400,
+          "y": 575,
+          "z": 975
+        },
+        "pctX": 54.657500000000006,
+        "pctY": 53.239999999999995
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": -4425,
+          "y": -1175,
+          "z": 700
+        },
+        "pctX": 40.4825,
+        "pctY": 85.8425
+      },
+      {
+        "regionName": "Catwalk",
+        "superRegionName": "Mid",
+        "fullName": "Mid Catwalk",
+        "gameLocation": {
+          "x": 600,
+          "y": 525,
+          "z": 1300
+        },
+        "pctX": 54.252500000000005,
+        "pctY": 45.14
+      },
+      {
+        "regionName": "Danger",
+        "superRegionName": "B",
+        "fullName": "B Danger",
+        "gameLocation": {
+          "x": -5850,
+          "y": 700,
+          "z": 625
+        },
+        "pctX": 55.669999999999995,
+        "pctY": 97.385
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 950,
+          "y": -5275,
+          "z": 1125
+        },
+        "pctX": 7.272499999999998,
+        "pctY": 42.305
+      },
+      {
+        "regionName": "Library",
+        "superRegionName": "Mid",
+        "fullName": "Mid Library",
+        "gameLocation": {
+          "x": -325,
+          "y": -600,
+          "z": 975
+        },
+        "pctX": 45.14,
+        "pctY": 52.63250000000001
+      },
+      {
+        "regionName": "Secret",
+        "superRegionName": "A",
+        "fullName": "A Secret",
+        "gameLocation": {
+          "x": 3775,
+          "y": -3850,
+          "z": 1025
+        },
+        "pctX": 18.814999999999998,
+        "pctY": 19.4225
+      },
+      {
+        "regionName": "Security",
+        "superRegionName": "A",
+        "fullName": "A Security",
+        "gameLocation": {
+          "x": 4900,
+          "y": -2975,
+          "z": 950
+        },
+        "pctX": 25.902499999999996,
+        "pctY": 10.309999999999997
+      },
+      {
+        "regionName": "Top",
+        "superRegionName": "Mid",
+        "fullName": "Mid Top",
+        "gameLocation": {
+          "x": 775,
+          "y": -2375,
+          "z": 1075
+        },
+        "pctX": 30.7625,
+        "pctY": 43.7225
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "B",
+        "fullName": "B Tower",
+        "gameLocation": {
+          "x": -3925,
+          "y": -2500,
+          "z": 1100
+        },
+        "pctX": 29.75,
+        "pctY": 81.7925
+      },
+      {
+        "regionName": "Vent",
+        "superRegionName": "A",
+        "fullName": "A Vent",
+        "gameLocation": {
+          "x": 1700,
+          "y": -325,
+          "z": 1325
+        },
+        "pctX": 47.3675,
+        "pctY": 36.23
+      }
+    ]
+  },
+  "lotus": {
+    "name": "Lotus",
+    "uuid": "2fe4ed3a-450a-948b-6d6b-e89a78e680a9",
+    "xMultiplier": 0.000072,
+    "yMultiplier": -0.000072,
+    "xScalarToAdd": 0.454789,
+    "yScalarToAdd": 0.917752,
+    "displayIconUrl": "https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/displayicon.png",
+    "localIcon": "/src/assets/maps/lotus.png",
+    "callouts": [
+      {
+        "regionName": "Top",
+        "superRegionName": "A",
+        "fullName": "A Top",
+        "gameLocation": {
+          "x": 9260.3,
+          "y": 5045.5884,
+          "z": 80.35567
+        },
+        "pctX": 81.80713648,
+        "pctY": 25.10104000000001
+      },
+      {
+        "regionName": "Drop",
+        "superRegionName": "A",
+        "fullName": "A Drop",
+        "gameLocation": {
+          "x": 9516.38,
+          "y": 6092.8936,
+          "z": 232.63
+        },
+        "pctX": 89.34773392000001,
+        "pctY": 23.257264
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 7735.5396,
+          "y": 5557.309,
+          "z": 232.63
+        },
+        "pctX": 85.4915248,
+        "pctY": 36.07931488
+      },
+      {
+        "regionName": "Hut",
+        "superRegionName": "A",
+        "fullName": "A Hut",
+        "gameLocation": {
+          "x": 7917.4614,
+          "y": 5557.309,
+          "z": 232.63098
+        },
+        "pctX": 85.4915248,
+        "pctY": 34.76947792
+      },
+      {
+        "regionName": "Tree",
+        "superRegionName": "A",
+        "fullName": "A Tree",
+        "gameLocation": {
+          "x": 6149.525,
+          "y": 5557.309,
+          "z": 232.63074
+        },
+        "pctX": 85.4915248,
+        "pctY": 47.49862
+      },
+      {
+        "regionName": "Door",
+        "superRegionName": "A",
+        "fullName": "A Door",
+        "gameLocation": {
+          "x": 5608.7563,
+          "y": 5203.91,
+          "z": 232.63055
+        },
+        "pctX": 82.947052,
+        "pctY": 51.39215464
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "A",
+        "fullName": "A Main",
+        "gameLocation": {
+          "x": 5288.3022,
+          "y": 4159.762,
+          "z": 232.63074
+        },
+        "pctX": 75.4291864,
+        "pctY": 53.69942416
+      },
+      {
+        "regionName": "Rubble",
+        "superRegionName": "A",
+        "fullName": "A Rubble",
+        "gameLocation": {
+          "x": 4401.0713,
+          "y": 4918.189,
+          "z": 232.66272
+        },
+        "pctX": 80.88986080000001,
+        "pctY": 60.08748664000001
+      },
+      {
+        "regionName": "Root",
+        "superRegionName": "A",
+        "fullName": "A Root",
+        "gameLocation": {
+          "x": 4401.0713,
+          "y": 3294.1523,
+          "z": 232.66956
+        },
+        "pctX": 69.19679656,
+        "pctY": 60.08748664000001
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 2685.951,
+          "y": 2927.1755,
+          "z": 232.66956
+        },
+        "pctX": 66.55456360000001,
+        "pctY": 72.43635280000001
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "C",
+        "fullName": "C Lobby",
+        "gameLocation": {
+          "x": 1403.5685,
+          "y": -1576.5884,
+          "z": 100.21295
+        },
+        "pctX": 34.12746352,
+        "pctY": 81.66950680000001
+      },
+      {
+        "regionName": "Pillars",
+        "superRegionName": "B",
+        "fullName": "B Pillars",
+        "gameLocation": {
+          "x": 3565.3691,
+          "y": 668.18317,
+          "z": 167.20193
+        },
+        "pctX": 50.289818824,
+        "pctY": 66.10454247999999
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "B",
+        "fullName": "B Main",
+        "gameLocation": {
+          "x": 4876.832,
+          "y": -47.87195,
+          "z": 167.20193
+        },
+        "pctX": 45.13422196,
+        "pctY": 56.6620096
+      },
+      {
+        "regionName": "Door",
+        "superRegionName": "C",
+        "fullName": "C Door",
+        "gameLocation": {
+          "x": 4818.6655,
+          "y": -1752.8021,
+          "z": 232.62439
+        },
+        "pctX": 32.858724880000004,
+        "pctY": 57.0808084
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": 6368.0327,
+          "y": 668.18317,
+          "z": 167.20438
+        },
+        "pctX": 50.289818824,
+        "pctY": 45.925364560000006
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "A",
+        "fullName": "A Link",
+        "gameLocation": {
+          "x": 6011.0664,
+          "y": 2087.6528,
+          "z": 167.20193
+        },
+        "pctX": 60.51000016,
+        "pctY": 48.49552192
+      },
+      {
+        "regionName": "Upper",
+        "superRegionName": "B",
+        "fullName": "B Upper",
+        "gameLocation": {
+          "x": 7682.943,
+          "y": 1517.3606,
+          "z": 167.20193
+        },
+        "pctX": 56.40389632,
+        "pctY": 36.4580104
+      },
+      {
+        "regionName": "Waterfall",
+        "superRegionName": "C",
+        "fullName": "C Waterfall",
+        "gameLocation": {
+          "x": 6719.804,
+          "y": -1994.2986,
+          "z": 71.56726
+        },
+        "pctX": 31.119950080000002,
+        "pctY": 43.3926112
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "C",
+        "fullName": "C Link",
+        "gameLocation": {
+          "x": 7504.109,
+          "y": -1377.893,
+          "z": 71.56726
+        },
+        "pctX": 35.5580704,
+        "pctY": 37.745615199999996
+      },
+      {
+        "regionName": "Stairs",
+        "superRegionName": "A",
+        "fullName": "A Stairs",
+        "gameLocation": {
+          "x": 8257.875,
+          "y": 3860.9312,
+          "z": 232.63
+        },
+        "pctX": 73.27760463999999,
+        "pctY": 32.31849999999999
+      },
+      {
+        "regionName": "Mound",
+        "superRegionName": "C",
+        "fullName": "C Mound",
+        "gameLocation": {
+          "x": 3863.7183,
+          "y": -1576.5884,
+          "z": 125.12698
+        },
+        "pctX": 34.12746352,
+        "pctY": 63.95642824000001
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "C",
+        "fullName": "C Main",
+        "gameLocation": {
+          "x": 5311.2646,
+          "y": -3148.162,
+          "z": 74.64343
+        },
+        "pctX": 22.8121336,
+        "pctY": 53.534094880000005
+      },
+      {
+        "regionName": "Bend",
+        "superRegionName": "C",
+        "fullName": "C Bend",
+        "gameLocation": {
+          "x": 5657.522,
+          "y": -5281.4395,
+          "z": 80.35518
+        },
+        "pctX": 7.452535599999999,
+        "pctY": 51.0410416
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "C",
+        "fullName": "C Site",
+        "gameLocation": {
+          "x": 6676.6636,
+          "y": -4265.876,
+          "z": 80.35567
+        },
+        "pctX": 14.764592799999999,
+        "pctY": 43.70322208
+      },
+      {
+        "regionName": "Hall",
+        "superRegionName": "C",
+        "fullName": "C Hall",
+        "gameLocation": {
+          "x": 7902.0615,
+          "y": -4265.876,
+          "z": 80.35567
+        },
+        "pctX": 14.764592799999999,
+        "pctY": 34.8803572
+      },
+      {
+        "regionName": "Gravel",
+        "superRegionName": "C",
+        "fullName": "C Gravel",
+        "gameLocation": {
+          "x": 8936.881,
+          "y": -1752.2874,
+          "z": 80.35567
+        },
+        "pctX": 32.86243072,
+        "pctY": 27.429656800000004
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 9686.767,
+          "y": 1697.8223,
+          "z": 80.35567
+        },
+        "pctX": 57.70322056,
+        "pctY": 22.030477599999998
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 1401.2915,
+          "y": 777.29834,
+          "z": 232.63013
+        },
+        "pctX": 51.075448048000005,
+        "pctY": 81.6859012
+      }
+    ]
+  },
+  "sunset": {
+    "name": "Sunset",
+    "uuid": "92584fbe-486a-b1b2-9faa-39b0f486b498",
+    "xMultiplier": 0.000078,
+    "yMultiplier": -0.000078,
+    "xScalarToAdd": 0.5,
+    "yScalarToAdd": 0.515625,
+    "displayIconUrl": "https://media.valorant-api.com/maps/92584fbe-486a-b1b2-9faa-39b0f486b498/displayicon.png",
+    "localIcon": "/src/assets/maps/sunset.png",
+    "callouts": [
+      {
+        "regionName": "Boba",
+        "superRegionName": "B",
+        "fullName": "B Boba",
+        "gameLocation": {
+          "x": 2200,
+          "y": -4800,
+          "z": -200
+        },
+        "pctX": 12.559999999999999,
+        "pctY": 34.4025
+      },
+      {
+        "regionName": "Tiles",
+        "superRegionName": "Mid",
+        "fullName": "Mid Tiles",
+        "gameLocation": {
+          "x": -1800,
+          "y": 400,
+          "z": -200
+        },
+        "pctX": 53.12,
+        "pctY": 65.60249999999999
+      },
+      {
+        "regionName": "Market",
+        "superRegionName": "B",
+        "fullName": "B Market",
+        "gameLocation": {
+          "x": -200,
+          "y": -3400,
+          "z": -200
+        },
+        "pctX": 23.48,
+        "pctY": 53.122499999999995
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": -600,
+          "y": -5850,
+          "z": -200
+        },
+        "pctX": 4.370000000000002,
+        "pctY": 56.24249999999999
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "B",
+        "fullName": "B Main",
+        "gameLocation": {
+          "x": -2000,
+          "y": -5650,
+          "z": -200
+        },
+        "pctX": 5.9300000000000015,
+        "pctY": 67.16250000000001
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "B",
+        "fullName": "B Lobby",
+        "gameLocation": {
+          "x": -3400,
+          "y": -2600,
+          "z": -200
+        },
+        "pctX": 29.720000000000002,
+        "pctY": 78.0825
+      },
+      {
+        "regionName": "Bottom",
+        "superRegionName": "Mid",
+        "fullName": "Mid Bottom",
+        "gameLocation": {
+          "x": -1800,
+          "y": -2025,
+          "z": -200
+        },
+        "pctX": 34.205,
+        "pctY": 65.60249999999999
+      },
+      {
+        "regionName": "Courtyard",
+        "superRegionName": "Mid",
+        "fullName": "Mid Courtyard",
+        "gameLocation": {
+          "x": -600,
+          "y": -1200,
+          "z": -200
+        },
+        "pctX": 40.64,
+        "pctY": 56.24249999999999
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": -1800,
+          "y": 2000,
+          "z": -200
+        },
+        "pctX": 65.60000000000001,
+        "pctY": 65.60249999999999
+      },
+      {
+        "regionName": "Main",
+        "superRegionName": "A",
+        "fullName": "A Main",
+        "gameLocation": {
+          "x": -400,
+          "y": 2200,
+          "z": -200
+        },
+        "pctX": 67.16,
+        "pctY": 54.6825
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "A",
+        "fullName": "A Link",
+        "gameLocation": {
+          "x": 2200,
+          "y": 3000,
+          "z": -200
+        },
+        "pctX": 73.4,
+        "pctY": 34.4025
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 1000,
+          "y": 3200,
+          "z": -200
+        },
+        "pctX": 74.96000000000001,
+        "pctY": 43.762499999999996
+      },
+      {
+        "regionName": "Elbow",
+        "superRegionName": "A",
+        "fullName": "A Elbow",
+        "gameLocation": {
+          "x": 200,
+          "y": 4200,
+          "z": -200
+        },
+        "pctX": 82.76,
+        "pctY": 50.002500000000005
+      },
+      {
+        "regionName": "Alley",
+        "superRegionName": "A",
+        "fullName": "A Alley",
+        "gameLocation": {
+          "x": 3400,
+          "y": 3600,
+          "z": -200
+        },
+        "pctX": 78.08,
+        "pctY": 25.0425
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 3805.4785,
+          "y": -1989.0962,
+          "z": -198.4972
+        },
+        "pctX": 34.48504964,
+        "pctY": 21.879767699999995
+      },
+      {
+        "regionName": "Top",
+        "superRegionName": "Mid",
+        "fullName": "Mid Top",
+        "gameLocation": {
+          "x": 2000,
+          "y": -2000,
+          "z": -200
+        },
+        "pctX": 34.4,
+        "pctY": 35.9625
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": -6025,
+          "y": -400,
+          "z": -200
+        },
+        "pctX": 46.88,
+        "pctY": 98.5575
+      }
+    ]
+  },
+  "haven": {
+    "name": "Haven",
+    "uuid": "2bee0dc9-4ffe-519b-1cbd-7fbe763a6047",
+    "xMultiplier": 0.000075,
+    "yMultiplier": -0.000075,
+    "xScalarToAdd": 1.09345,
+    "yScalarToAdd": 0.642728,
+    "displayIconUrl": "https://media.valorant-api.com/maps/2bee0dc9-4ffe-519b-1cbd-7fbe763a6047/displayicon.png",
+    "localIcon": "/src/assets/maps/haven.png",
+    "callouts": [
+      {
+        "regionName": "Garden",
+        "superRegionName": "A",
+        "fullName": "A Garden",
+        "gameLocation": {
+          "x": 3100.261,
+          "y": -4683.6016,
+          "z": 300.0001
+        },
+        "pctX": 74.21798800000002,
+        "pctY": 41.0208425
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "A",
+        "fullName": "A Link",
+        "gameLocation": {
+          "x": 4244.4214,
+          "y": -10715.68,
+          "z": 299.99994
+        },
+        "pctX": 28.97740000000001,
+        "pctY": 32.4396395
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "A",
+        "fullName": "A Lobby",
+        "gameLocation": {
+          "x": 3438.537,
+          "y": -6260.409,
+          "z": 300.00006
+        },
+        "pctX": 62.39193250000001,
+        "pctY": 38.4837725
+      },
+      {
+        "regionName": "Long",
+        "superRegionName": "A",
+        "fullName": "A Long",
+        "gameLocation": {
+          "x": 6209.695,
+          "y": -6901.142,
+          "z": 100
+        },
+        "pctX": 57.586435000000016,
+        "pctY": 17.7000875
+      },
+      {
+        "regionName": "Sewer",
+        "superRegionName": "A",
+        "fullName": "A Sewer",
+        "gameLocation": {
+          "x": 3452.8735,
+          "y": -7915.7246,
+          "z": 0.00010681152
+        },
+        "pctX": 49.97706550000001,
+        "pctY": 38.376248749999995
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "A",
+        "fullName": "A Site",
+        "gameLocation": {
+          "x": 6309.3076,
+          "y": -9225.703,
+          "z": 300
+        },
+        "pctX": 40.152227500000016,
+        "pctY": 16.952993
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Attacker Side",
+        "fullName": "Attacker Side Spawn",
+        "gameLocation": {
+          "x": 1741.7622,
+          "y": -2642.7925,
+          "z": 278.31885
+        },
+        "pctX": 89.52405625,
+        "pctY": 51.2095835
+      },
+      {
+        "regionName": "Back",
+        "superRegionName": "B",
+        "fullName": "B Back",
+        "gameLocation": {
+          "x": 1966.1608,
+          "y": -10664.775,
+          "z": 300.00006
+        },
+        "pctX": 29.35918750000002,
+        "pctY": 49.526593999999996
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "B",
+        "fullName": "B Site",
+        "gameLocation": {
+          "x": 1884.706,
+          "y": -9231.335,
+          "z": 700.1339
+        },
+        "pctX": 40.10998750000001,
+        "pctY": 50.137505000000004
+      },
+      {
+        "regionName": "Link",
+        "superRegionName": "C",
+        "fullName": "C Link",
+        "gameLocation": {
+          "x": -87.761444,
+          "y": -10004.415,
+          "z": 299.99963
+        },
+        "pctX": 34.311887500000005,
+        "pctY": 64.93101082999999
+      },
+      {
+        "regionName": "Lobby",
+        "superRegionName": "C",
+        "fullName": "C Lobby",
+        "gameLocation": {
+          "x": -1642.189,
+          "y": -5720.345,
+          "z": 100.90173
+        },
+        "pctX": 66.4424125,
+        "pctY": 76.58921749999999
+      },
+      {
+        "regionName": "Long",
+        "superRegionName": "C",
+        "fullName": "C Long",
+        "gameLocation": {
+          "x": -3356.814,
+          "y": -5990.872,
+          "z": 99.999756
+        },
+        "pctX": 64.41346000000001,
+        "pctY": 89.448905
+      },
+      {
+        "regionName": "Garage",
+        "superRegionName": "C",
+        "fullName": "C Garage",
+        "gameLocation": {
+          "x": 180.07678,
+          "y": -7999.5845,
+          "z": 99.99872
+        },
+        "pctX": 49.348116250000004,
+        "pctY": 62.92222414999999
+      },
+      {
+        "regionName": "Window",
+        "superRegionName": "C",
+        "fullName": "C Window",
+        "gameLocation": {
+          "x": -10.126678,
+          "y": -8993.241,
+          "z": 300
+        },
+        "pctX": 41.89569250000002,
+        "pctY": 64.34875008499999
+      },
+      {
+        "regionName": "Site",
+        "superRegionName": "C",
+        "fullName": "C Site",
+        "gameLocation": {
+          "x": -2378.1328,
+          "y": -9010.557,
+          "z": 199.99994
+        },
+        "pctX": 41.765822500000006,
+        "pctY": 82.108796
+      },
+      {
+        "regionName": "Cubby",
+        "superRegionName": "C",
+        "fullName": "C Cubby",
+        "gameLocation": {
+          "x": -2119.7693,
+          "y": -6561.603,
+          "z": 200.00006
+        },
+        "pctX": 60.13297750000001,
+        "pctY": 80.17106974999999
+      },
+      {
+        "regionName": "Spawn",
+        "superRegionName": "Defender Side",
+        "fullName": "Defender Side Spawn",
+        "gameLocation": {
+          "x": 2946.3042,
+          "y": -12714.707,
+          "z": 300.0011
+        },
+        "pctX": 13.98469750000001,
+        "pctY": 42.175518499999995
+      },
+      {
+        "regionName": "Doors",
+        "superRegionName": "Mid",
+        "fullName": "Mid Doors",
+        "gameLocation": {
+          "x": 151.11594,
+          "y": -6262.9155,
+          "z": 95.41321
+        },
+        "pctX": 62.37313375000001,
+        "pctY": 63.13943045
+      },
+      {
+        "regionName": "Courtyard",
+        "superRegionName": "Mid",
+        "fullName": "Mid Courtyard",
+        "gameLocation": {
+          "x": 1822.1299,
+          "y": -6712.6875,
+          "z": 94.86078
+        },
+        "pctX": 58.999843750000004,
+        "pctY": 50.60682575
+      },
+      {
+        "regionName": "Window",
+        "superRegionName": "Mid",
+        "fullName": "Mid Window",
+        "gameLocation": {
+          "x": 1950.2218,
+          "y": -5567.912,
+          "z": 300.0006
+        },
+        "pctX": 67.58566,
+        "pctY": 49.6461365
+      },
+      {
+        "regionName": "Tower",
+        "superRegionName": "A",
+        "fullName": "A Tower",
+        "gameLocation": {
+          "x": 6721.4043,
+          "y": -10472.5205,
+          "z": 900.0001
+        },
+        "pctX": 30.801096250000004,
+        "pctY": 13.86226775
+      }
+    ]
+  }
+}

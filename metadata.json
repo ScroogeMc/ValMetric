@@ -1,0 +1,6 @@
+{
+  "name": "TACTIX // Desktop Esports Analytics",
+  "description": "Independent Windows 11 desktop tactical spatial analytics, duel heatmaps, team trade spacing analysis, and round economy timeline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
