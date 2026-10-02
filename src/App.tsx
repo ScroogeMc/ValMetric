@@ -3,40 +3,109 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { TitleBar } from './components/TitleBar';
 import { Sidebar } from './components/Sidebar';
 import { MapCanvas } from './components/MapCanvas';
 import { LoneWolfPanel } from './components/LoneWolfPanel';
 import { TacticalIntelPanel } from './components/TacticalIntelPanel';
-import { RoundTimeline } from './components/RoundTimeline';
 import { OverviewView } from './components/OverviewView';
 import { MatchesView } from './components/MatchesView';
 import { EconomyView } from './components/EconomyView';
 import { CoachingView } from './components/CoachingView';
+import { ReplayView } from './components/ReplayView';
 
-import { 
-  CURRENT_PLAYER, 
-  ALL_DUEL_ZONES, 
-  LONE_WOLF_SCENARIOS, 
-  MOCK_ROUND_ECONOMY 
-} from './data/mockData';
-import { 
-  DuelZone, 
-  AnalyticsMode, 
-  GameSide, 
-  WeaponType, 
-  MapId 
+import { listMatches } from './services/apiService';
+import {
+  computePlayerProfile,
+  computeDuelZones,
+  computeLoneWolfScenario,
+  computeTradeSpacing,
+  computeFirstBloodStats,
+  computeEconomyAggregates,
+} from './data/metrics';
+import { getMapKey } from './data/mockMatches';
+import {
+  DuelZone,
+  AnalyticsMode,
+  GameSide,
+  WeaponType,
+  MapId,
+  MatchDto,
+  LoneWolfScenario,
 } from './types/valorant';
 
+const MAP_IDS: MapId[] = ['ascent', 'abyss', 'bind', 'haven', 'split', 'sunset', 'lotus'];
+
 export default function App() {
-  const [currentTab, setCurrentTab] = useState<string>('spatial');
+  const [currentTab, setCurrentTab] = useState<string>('overview');
   const [currentMap, setCurrentMap] = useState<MapId>('ascent');
   const [activeMode, setActiveMode] = useState<AnalyticsMode>('entry_zones');
   const [activeSide, setActiveSide] = useState<GameSide>('all');
   const [activeWeapon, setActiveWeapon] = useState<WeaponType>('all');
-  const [selectedZone, setSelectedZone] = useState<DuelZone | null>(ALL_DUEL_ZONES.ascent[0]);
-  const [currentRound, setCurrentRound] = useState<number>(9);
+  const [selectedZone, setSelectedZone] = useState<DuelZone | null>(null);
+  const [tradeRound, setTradeRound] = useState<number>(1);
+
+  // --- val-match-v1 match data (consumed via src/services/apiService.ts) ---
+  const [matches, setMatches] = useState<MatchDto[]>([]);
+  const [selectedMatch, setSelectedMatch] = useState<MatchDto | null>(null);
+  const [matchesLoading, setMatchesLoading] = useState<boolean>(true);
+  const [matchesError, setMatchesError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await listMatches();
+        if (cancelled) return;
+        setMatches(data);
+      } catch (err) {
+        if (!cancelled) {
+          setMatchesError(err instanceof Error ? err.message : 'Failed to load matches');
+        }
+      } finally {
+        if (!cancelled) setMatchesLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // --- Derived aggregate analytics (across ALL loaded matches) ---
+  const profile = useMemo(() => computePlayerProfile(matches), [matches]);
+  const firstBloodStats = useMemo(() => computeFirstBloodStats(matches), [matches]);
+  const economyAggregates = useMemo(() => computeEconomyAggregates(matches), [matches]);
+
+  // Entry Duels: recompute zones per side so firstBloods/firstDeaths/winrate
+  // genuinely recalculate (not just hide zones) when Attack/Defense/All changes.
+  const activeZones = useMemo(
+    () => computeDuelZones(matches, currentMap, activeSide),
+    [matches, currentMap, activeSide],
+  );
+
+  // Trade Spacing: per-round scenario for the current map's most recent match.
+  const tradeMatch = useMemo(
+    () => matches.find((m) => getMapKey(m.matchInfo.mapId) === currentMap) ?? null,
+    [matches, currentMap],
+  );
+  const loneWolfByMap = useMemo(() => {
+    const out = {} as Record<MapId, LoneWolfScenario>;
+    for (const id of MAP_IDS) out[id] = computeLoneWolfScenario(matches, id);
+    return out;
+  }, [matches]);
+  const activeLoneWolf = useMemo(
+    () => (tradeMatch ? computeTradeSpacing(tradeMatch, tradeRound) : loneWolfByMap[currentMap]),
+    [tradeMatch, tradeRound, currentMap, loneWolfByMap],
+  );
+  const tradeMaxRound = tradeMatch?.roundResults.length ?? 1;
+
+  // Opening a match (card click or "Telemetry Replay") enters the dedicated
+  // replay flow; the aggregate spatial tab is never polluted with match data.
+  const handleOpenMatch = (match: MatchDto) => {
+    setSelectedMatch(match);
+    setCurrentTab('replay');
+  };
 
   const availableMaps: { id: MapId; name: string }[] = [
     { id: 'ascent', name: 'Ascent' },
@@ -48,13 +117,10 @@ export default function App() {
     { id: 'lotus', name: 'Lotus' },
   ];
 
-  const activeZones = ALL_DUEL_ZONES[currentMap] || ALL_DUEL_ZONES.ascent;
-  const activeLoneWolf = LONE_WOLF_SCENARIOS[currentMap] || LONE_WOLF_SCENARIOS.ascent;
-
   const handleMapChange = (mapId: MapId) => {
     setCurrentMap(mapId);
-    const newZones = ALL_DUEL_ZONES[mapId] || ALL_DUEL_ZONES.ascent;
-    setSelectedZone(newZones.length > 0 ? newZones[0] : null);
+    setSelectedZone(null);
+    setTradeRound(1);
   };
 
   return (
@@ -66,7 +132,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar (Apple HIG Deferential Console) */}
         <Sidebar
-          player={CURRENT_PLAYER}
+          player={profile}
           currentTab={currentTab}
           onTabChange={setCurrentTab}
         />
@@ -130,43 +196,47 @@ export default function App() {
               {/* Right Panel: Spacing Radar Analysis or Tactical Intel */}
               <div className="w-80 shrink-0 h-full border-l border-white/[0.06]">
                 {activeMode === 'lone_wolf' ? (
-                  <LoneWolfPanel scenario={activeLoneWolf} />
+                  <LoneWolfPanel
+                    scenario={activeLoneWolf}
+                    roundNumber={tradeRound}
+                    maxRound={tradeMaxRound}
+                    onRoundChange={setTradeRound}
+                  />
                 ) : (
                   <TacticalIntelPanel
                     selectedZone={selectedZone}
+                    zones={activeZones}
+                    firstBloodStats={firstBloodStats}
                     onClearSelection={() => setSelectedZone(null)}
                   />
                 )}
               </div>
             </div>
-
-            {/* Bottom: Final Cut Pro style Timeline Track */}
-            <RoundTimeline
-              roundData={MOCK_ROUND_ECONOMY}
-              currentRound={currentRound}
-              onRoundChange={setCurrentRound}
-            />
           </div>
         )}
 
         {/* Secondary Modules */}
         {currentTab === 'overview' && (
           <OverviewView
-            player={CURRENT_PLAYER}
+            player={profile}
+            matches={matches}
             onNavigateToSpatial={() => setCurrentTab('spatial')}
           />
         )}
 
         {currentTab === 'matches' && (
           <MatchesView
-            onSelectAscentMatch={() => {
-              setCurrentMap('ascent');
-              setCurrentTab('spatial');
-            }}
+            matches={matches}
+            profile={profile}
+            loading={matchesLoading}
+            error={matchesError}
+            onOpenMatch={handleOpenMatch}
           />
         )}
 
-        {currentTab === 'economy' && <EconomyView />}
+        {currentTab === 'economy' && (
+          <EconomyView aggregates={economyAggregates} loading={matchesLoading} />
+        )}
 
         {currentTab === 'coaching' && (
           <CoachingView
@@ -174,6 +244,14 @@ export default function App() {
               setCurrentTab('spatial');
               setActiveMode('lone_wolf');
             }}
+          />
+        )}
+
+        {/* Dedicated Telemetry Replay flow (entered from MatchesView) */}
+        {currentTab === 'replay' && selectedMatch && (
+          <ReplayView
+            match={selectedMatch}
+            onBack={() => setCurrentTab('matches')}
           />
         )}
       </div>

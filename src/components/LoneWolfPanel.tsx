@@ -7,14 +7,24 @@ import {
   Pause, 
   RotateCcw,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 interface LoneWolfPanelProps {
   scenario: LoneWolfScenario;
+  roundNumber: number;
+  maxRound: number;
+  onRoundChange: (round: number) => void;
 }
 
-export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
+export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({
+  scenario,
+  roundNumber,
+  maxRound,
+  onRoundChange,
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackTime, setPlaybackTime] = useState(14);
 
@@ -22,10 +32,39 @@ export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const recommended = scenario.recommendedProximityMeters || 15;
+  const tradeGap = scenario.tradeGapMeters || 0;
+  const delta = Math.max(0, tradeGap - recommended);
+  const tradeFraction = tradeGap > 0
+    ? Math.min(100, Math.round((100 * recommended) / tradeGap))
+    : 0;
+  const nearestAlly = scenario.allies?.[0];
+
   return (
     <div className="h-full flex flex-col justify-between p-4 bg-[#111116] text-xs select-none font-sans-clean">
       {/* Top: Spacing Analysis Data Cards */}
       <div className="space-y-3">
+        {/* Round Stepper (Trade Spacing) */}
+        <div className="flex items-center justify-between bg-[#191920] border border-white/[0.06] rounded-lg p-1.5">
+          <button
+            onClick={() => onRoundChange(Math.max(1, roundNumber - 1))}
+            className="w-7 h-7 rounded-md flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            title="Previous Round"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <span className="text-xs font-medium text-white font-mono-num">
+            Round {roundNumber}/{maxRound}
+          </span>
+          <button
+            onClick={() => onRoundChange(Math.min(maxRound, roundNumber + 1))}
+            className="w-7 h-7 rounded-md flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            title="Next Round"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Main Alert Card */}
         <div className="p-3 bg-[#191920] border border-white/[0.06] rounded-xl space-y-2">
           <div className="flex items-start gap-2.5">
@@ -43,7 +82,7 @@ export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
           </div>
 
           <p className="text-zinc-300 text-xs leading-relaxed">
-            In 40% of attack rounds, opening contact occurs over 15 meters away from the nearest ally, significantly reducing re-frag conversion.
+            {scenario.warningDescription}
           </p>
         </div>
 
@@ -55,9 +94,9 @@ export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
               <Users className="w-3.5 h-3.5 text-[#9CA3AF]" />
             </div>
             <div className="text-2xl font-semibold text-white mt-1 font-mono-num">
-              {scenario.tradeGapMeters}m
+              {tradeGap}m
             </div>
-            <span className="text-[10px] text-[#9CA3AF]">Recommended: &lt;15m</span>
+            <span className="text-[10px] text-[#9CA3AF]">Recommended: &lt;{recommended}m</span>
           </div>
 
           <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl">
@@ -76,32 +115,32 @@ export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
         <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl space-y-2">
           <div className="flex justify-between items-center text-xs">
             <span className="text-zinc-200">Effective Spacing Spectrum</span>
-            <span className="text-[#F87171] font-mono-num text-[11px]">+27.4m delta</span>
+            <span className="text-[#F87171] font-mono-num text-[11px]">+{delta.toFixed(1)}m delta</span>
           </div>
 
           {/* Clean Segmented Line */}
           <div className="w-full h-1.5 bg-[#111116] rounded-full overflow-hidden flex">
-            <div 
+            <div
               className="h-full bg-[#2DD4BF] rounded-full"
-              style={{ width: '35%' }}
+              style={{ width: `${tradeFraction}%` }}
             />
-            <div 
+            <div
               className="h-full bg-[#F87171] rounded-full ml-auto"
-              style={{ width: '45%' }}
+              style={{ width: `${100 - tradeFraction}%` }}
             />
           </div>
 
           <div className="flex justify-between text-[10px] text-[#9CA3AF] font-mono-num">
             <span>0m (Contact)</span>
-            <span className="text-[#2DD4BF]">15m (Trade Sphere)</span>
-            <span className="text-[#F87171]">42.4m (Actual)</span>
+            <span className="text-[#2DD4BF]">{recommended}m (Trade Sphere)</span>
+            <span className="text-[#F87171]">{tradeGap}m (Actual)</span>
           </div>
         </div>
 
         {/* Episode Breakdown Table */}
         <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl space-y-2 text-xs">
           <div className="text-[10px] font-medium uppercase tracking-wider text-[#9CA3AF]">
-            Round {scenario.roundNumber} Log
+            Round {scenario.roundNumber > 0 ? scenario.roundNumber : '—'} Log
           </div>
           <div className="space-y-1.5 text-zinc-300 text-[11px]">
             <div className="flex items-center justify-between pb-1 border-b border-white/[0.04]">
@@ -110,11 +149,15 @@ export const LoneWolfPanel: React.FC<LoneWolfPanelProps> = ({ scenario }) => {
             </div>
             <div className="flex items-center justify-between pb-1 border-b border-white/[0.04]">
               <span className="text-[#9CA3AF]">Nearest Ally:</span>
-              <span className="text-zinc-200">Chronos (Sova) @ Mid Tiles</span>
+              <span className="text-zinc-200">
+                {nearestAlly ? `${nearestAlly.name} (${nearestAlly.agent})` : 'No ally data'}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-[#9CA3AF]">Opponent Holding:</span>
-              <span className="text-[#F87171]">Chamber (Operator)</span>
+              <span className="text-[#F87171]">
+                {scenario.enemy.name} ({scenario.enemy.weapon})
+              </span>
             </div>
           </div>
         </div>

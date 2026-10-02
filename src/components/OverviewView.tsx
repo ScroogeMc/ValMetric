@@ -1,41 +1,116 @@
 import React from 'react';
-import { PlayerStats } from '../types/valorant';
+import { PlayerStats, MatchDto } from '../types/valorant';
 import { 
   TrendingUp, 
   Target, 
   Crosshair, 
   Activity, 
   Flame,
-  ArrowRight,
-  Shield,
   Zap,
-  Map as MapIcon,
-  Compass,
-  Award
+  Compass
 } from 'lucide-react';
-import { RECENT_MATCHES } from '../data/mockData';
+import { computeFirstBloodStats } from '../data/metrics';
+import { MAP_CATALOG, getAgentName, getWeaponName, CURRENT_PLAYER_PUUID } from '../data/mockMatches';
 
 interface OverviewViewProps {
   player: PlayerStats;
+  matches: MatchDto[];
   onNavigateToSpatial: () => void;
 }
 
-export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateToSpatial }) => {
-  const mapPerformance = [
-    { name: 'Ascent', winrate: 74, matches: 27, wins: 20, losses: 7, acs: 276.4, favoredSite: 'Mid Courtyard' },
-    { name: 'Abyss', winrate: 67, matches: 15, wins: 10, losses: 5, acs: 262.1, favoredSite: 'A Hazard' },
-    { name: 'Haven', winrate: 62, matches: 16, wins: 10, losses: 6, acs: 248.5, favoredSite: 'A Long' },
-    { name: 'Bind', winrate: 58, matches: 12, wins: 7, losses: 5, acs: 251.0, favoredSite: 'B Hookah' },
-    { name: 'Split', winrate: 50, matches: 8, wins: 4, losses: 4, acs: 239.8, favoredSite: 'A Ramps' },
-    { name: 'Sunset', winrate: 55, matches: 6, wins: 3, losses: 3, acs: 245.2, favoredSite: 'B Main' },
-  ];
+const formatGameDate = (ms: number): string => {
+  const d = new Date(ms);
+  const date = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  const time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  return `${date}, ${time}`;
+};
 
-  const openingWeaponStats = [
-    { weapon: 'Vandal', entryWr: 64, duels: 58, fb: 37, fd: 21, avgRange: '18.4m' },
-    { weapon: 'Operator', entryWr: 72, duels: 25, fb: 18, fd: 7, avgRange: '32.1m' },
-    { weapon: 'Phantom', entryWr: 58, duels: 19, fb: 11, fd: 8, avgRange: '14.2m' },
-    { weapon: 'Sheriff', entryWr: 50, duels: 12, fb: 6, fd: 6, avgRange: '16.5m' },
-  ];
+const mode = (values: string[]): string => {
+  if (values.length === 0) return 'Unknown';
+  const counts = new Map<string, number>();
+  for (const v of values) counts.set(v, (counts.get(v) ?? 0) + 1);
+  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+};
+
+export const OverviewView: React.FC<OverviewViewProps> = ({ player, matches, onNavigateToSpatial }) => {
+  const fbStats = computeFirstBloodStats(matches);
+
+  // --- Map performance ---
+  const mapStats = new Map<string, { name: string; wins: number; losses: number; acsSum: number; acsCount: number }>();
+  for (const m of matches) {
+    const name = MAP_CATALOG[m.matchInfo.mapId]?.name ?? 'Unknown';
+    const p = m.players.find((pp) => pp.puuid === CURRENT_PLAYER_PUUID);
+    const blueWon = m.teams.find((t) => t.teamId === 'Blue')?.won ?? false;
+    const acs = p && p.stats.roundsPlayed > 0 ? p.stats.score / p.stats.roundsPlayed : 0;
+    const s = mapStats.get(name) ?? { name, wins: 0, losses: 0, acsSum: 0, acsCount: 0 };
+    if (blueWon) s.wins += 1;
+    else s.losses += 1;
+    s.acsSum += acs;
+    s.acsCount += 1;
+    mapStats.set(name, s);
+  }
+  const mapPerformance = [...mapStats.values()].map((s) => ({
+    name: s.name,
+    matches: s.wins + s.losses,
+    wins: s.wins,
+    losses: s.losses,
+    winrate: s.wins + s.losses > 0 ? Math.round((100 * s.wins) / (s.wins + s.losses)) : 0,
+    acs: s.acsCount > 0 ? Math.round(s.acsSum / s.acsCount) : 0,
+  }));
+
+  // --- Agent pool ---
+  const agentStats = new Map<string, { agent: string; matches: number; wins: number; kills: number; deaths: number; score: number; roundsPlayed: number; weapons: string[] }>();
+  for (const m of matches) {
+    const p = m.players.find((pp) => pp.puuid === CURRENT_PLAYER_PUUID);
+    if (!p) continue;
+    const agent = getAgentName(p.characterId);
+    const blueWon = m.teams.find((t) => t.teamId === 'Blue')?.won ?? false;
+    const s = agentStats.get(agent) ?? { agent, matches: 0, wins: 0, kills: 0, deaths: 0, score: 0, roundsPlayed: 0, weapons: [] as string[] };
+    s.matches += 1;
+    if (blueWon) s.wins += 1;
+    s.kills += p.stats.kills;
+    s.deaths += p.stats.deaths;
+    s.score += p.stats.score;
+    s.roundsPlayed += p.stats.roundsPlayed;
+    for (const r of m.roundResults) {
+      for (const ps of r.playerStats) {
+        if (ps.puuid !== CURRENT_PLAYER_PUUID) continue;
+        for (const k of ps.kills) s.weapons.push(getWeaponName(k.finishingDamage.damageItem));
+      }
+    }
+    agentStats.set(agent, s);
+  }
+  const agentPool = [...agentStats.values()].map((s) => ({
+    agent: s.agent,
+    pickRate: matches.length > 0 ? Math.round((100 * s.matches) / matches.length) : 0,
+    winrate: s.matches > 0 ? Math.round((100 * s.wins) / s.matches) : 0,
+    acs: s.roundsPlayed > 0 ? Math.round(s.score / s.roundsPlayed) : 0,
+    kd: s.deaths > 0 ? Math.round((100 * s.kills) / s.deaths) / 100 : s.kills,
+    primaryWeapon: mode(s.weapons),
+  }));
+
+  // --- Weapon performance ---
+  const weaponKills = new Map<string, number>();
+  let totalKills = 0;
+  for (const m of matches) {
+    for (const r of m.roundResults) {
+      for (const ps of r.playerStats) {
+        if (ps.puuid !== CURRENT_PLAYER_PUUID) continue;
+        for (const k of ps.kills) {
+          const w = getWeaponName(k.finishingDamage.damageItem);
+          weaponKills.set(w, (weaponKills.get(w) ?? 0) + 1);
+          totalKills += 1;
+        }
+      }
+    }
+  }
+  const weaponStats = [...weaponKills.entries()]
+    .map(([weapon, kills]) => ({ weapon, kills, pct: totalKills > 0 ? Math.round((100 * kills) / totalKills) : 0 }))
+    .sort((a, b) => b.kills - a.kills)
+    .slice(0, 4);
+
+  const totalK = matches.reduce((s, m) => s + (m.players.find((p) => p.puuid === CURRENT_PLAYER_PUUID)?.stats.kills ?? 0), 0);
+  const totalD = matches.reduce((s, m) => s + (m.players.find((p) => p.puuid === CURRENT_PLAYER_PUUID)?.stats.deaths ?? 0), 0);
 
   return (
     <div className="flex-1 bg-[#111116] p-6 overflow-y-auto select-none space-y-5 font-sans-clean w-full">
@@ -45,7 +120,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
           <div>
             <div className="text-[11px] font-medium text-[#9CA3AF] flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#2DD4BF]" />
-              <span>Competitive Episode 9 Act II · Performance Dossier</span>
+              <span>Performance Dossier</span>
               <span className="text-zinc-600">·</span>
               <span className="text-zinc-300 font-mono-num">Season Winrate: {player.winrate}%</span>
             </div>
@@ -53,7 +128,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
               Performance Overview · {player.tag}
             </h1>
             <p className="text-xs text-[#9CA3AF] max-w-2xl mt-1 leading-relaxed">
-              Top 0.05% Regional Standing. Exceptional first-contact conversion across entry duels with identified spacing improvements on split attacks.
+              Aggregated across {matches.length} competitive session{matches.length === 1 ? '' : 's'} — {player.mainAgent} ({player.mainRole}), {player.region}.
             </p>
           </div>
 
@@ -81,7 +156,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
           </div>
           <div className="text-[11px] text-[#2DD4BF] flex items-center gap-1 mt-1 font-medium">
             <TrendingUp className="w-3 h-3" />
-            <span>+14.2 ACS vs Radiant median</span>
+            <span>Across {player.matchesPlayed} matches</span>
           </div>
         </div>
 
@@ -95,7 +170,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
           </div>
           <div className="text-[11px] text-[#2DD4BF] flex items-center gap-1 mt-1 font-medium">
             <TrendingUp className="w-3 h-3" />
-            <span>1,420 Kills / 959 Deaths</span>
+            <span>{totalK} Kills / {totalD} Deaths</span>
           </div>
         </div>
 
@@ -108,7 +183,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
             {player.headshotPct}%
           </div>
           <div className="text-[11px] text-[#9CA3AF] mt-1 font-mono-num">
-            <span>Vandal First Bullet: 42.1%</span>
+            <span>First-blood ratio: {player.firstBloodRatio}x</span>
           </div>
         </div>
 
@@ -121,7 +196,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
             {player.firstBloodRatio}x
           </div>
           <div className="text-[11px] text-[#9CA3AF] mt-1">
-            <span>68% Attack Opening Winrate</span>
+            <span>{fbStats.firstBloods} FB / {fbStats.firstDeaths} FD</span>
           </div>
         </div>
       </div>
@@ -137,10 +212,10 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
                 <h3 className="font-semibold text-sm text-white">
                   Agent Pool Telemetry
                 </h3>
-                <span className="text-xs text-[#9CA3AF]">Current Act Sample: 84 Competitive Matches</span>
+                <span className="text-xs text-[#9CA3AF]">{player.matchesPlayed} Competitive Matches</span>
               </div>
               <span className="text-[11px] text-[#9CA3AF] font-mono-num">
-                Rank #384 Radiant
+                {player.rankTitle} {player.rankTier}
               </span>
             </div>
 
@@ -153,50 +228,20 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
                     <th className="py-2.5 px-3 font-medium">Winrate</th>
                     <th className="py-2.5 px-3 font-medium">ACS</th>
                     <th className="py-2.5 px-3 font-medium">K/D</th>
-                    <th className="py-2.5 px-3 font-medium">First Bloods</th>
                     <th className="py-2.5 px-3 font-medium">Primary Weapon</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.04]">
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-3 font-medium text-white flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#2DD4BF]" />
-                      <span>Jett</span>
-                      <span className="text-[10px] text-[#9CA3AF] bg-white/[0.05] px-1.5 py-0.2 rounded border border-white/[0.05]">Duelist</span>
-                    </td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-300">52 matches (62%)</td>
-                    <td className="py-3 px-3 font-mono-num font-semibold text-[#2DD4BF]">71.2%</td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-200">284.2</td>
-                    <td className="py-3 px-3 font-mono-num font-medium text-white">1.54</td>
-                    <td className="py-3 px-3 font-mono-num text-[#2DD4BF]">124 (2.4/m)</td>
-                    <td className="py-3 px-3 text-[#9CA3AF]">Vandal / Operator</td>
-                  </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-3 font-medium text-white flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-zinc-400" />
-                      <span>Reyna</span>
-                      <span className="text-[10px] text-[#9CA3AF] bg-white/[0.05] px-1.5 py-0.2 rounded border border-white/[0.05]">Duelist</span>
-                    </td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-300">18 matches (21%)</td>
-                    <td className="py-3 px-3 font-mono-num font-semibold text-[#2DD4BF]">66.7%</td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-200">262.8</td>
-                    <td className="py-3 px-3 font-mono-num font-medium text-white">1.42</td>
-                    <td className="py-3 px-3 font-mono-num text-[#2DD4BF]">48 (2.6/m)</td>
-                    <td className="py-3 px-3 text-[#9CA3AF]">Phantom / Vandal</td>
-                  </tr>
-                  <tr className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-3 font-medium text-white flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-zinc-500" />
-                      <span>Sova</span>
-                      <span className="text-[10px] text-[#9CA3AF] bg-white/[0.05] px-1.5 py-0.2 rounded border border-white/[0.05]">Initiator</span>
-                    </td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-300">14 matches (17%)</td>
-                    <td className="py-3 px-3 font-mono-num font-semibold text-zinc-200">64.3%</td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-200">215.4</td>
-                    <td className="py-3 px-3 font-mono-num font-medium text-white">1.18</td>
-                    <td className="py-3 px-3 font-mono-num text-zinc-300">18 (1.2/m)</td>
-                    <td className="py-3 px-3 text-[#9CA3AF]">Vandal / Odin</td>
-                  </tr>
+                  {agentPool.map((a) => (
+                    <tr key={a.agent} className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-3 px-3 font-medium text-white">{a.agent}</td>
+                      <td className="py-3 px-3 font-mono-num text-zinc-300">{a.pickRate}%</td>
+                      <td className="py-3 px-3 font-mono-num font-semibold text-[#2DD4BF]">{a.winrate}%</td>
+                      <td className="py-3 px-3 font-mono-num text-zinc-200">{a.acs}</td>
+                      <td className="py-3 px-3 font-mono-num font-medium text-white">{a.kd}</td>
+                      <td className="py-3 px-3 text-[#9CA3AF]">{a.primaryWeapon}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -242,7 +287,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
           </div>
         </div>
 
-        {/* Right Column (xl:col-span-5): Match Trajectory, Weapon Entry Matrix & Insights */}
+        {/* Right Column (xl:col-span-5): Match Trajectory, Weapon Performance & Insights */}
         <div className="xl:col-span-5 space-y-5">
           {/* Recent Match Trajectory Digest */}
           <div className="bg-[#191920] border border-white/[0.06] rounded-xl p-4 shadow-sm w-full">
@@ -253,15 +298,22 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
                   Recent Match Trajectory
                 </h3>
               </div>
-              <span className="text-xs text-[#2DD4BF] font-mono-num font-medium">+142 RR / 5 Days</span>
+              <span className="text-xs text-[#2DD4BF] font-mono-num font-medium">{matches.length} matches</span>
             </div>
 
             <div className="mt-3 space-y-2">
-              {RECENT_MATCHES.slice(0, 4).map((m) => {
-                const isWin = m.result === 'Victory';
+              {matches.slice(0, 4).map((m) => {
+                const blue = m.teams.find((t) => t.teamId === 'Blue');
+                const red = m.teams.find((t) => t.teamId === 'Red');
+                const p = m.players.find((pp) => pp.puuid === CURRENT_PLAYER_PUUID);
+                const isWin = blue?.won ?? false;
+                const mapName = MAP_CATALOG[m.matchInfo.mapId]?.name ?? 'Unknown';
+                const score = `${blue?.roundsWon ?? 0} - ${red?.roundsWon ?? 0}`;
+                const agent = p ? getAgentName(p.characterId) : 'Unknown';
+                const kda = `${p?.stats.kills ?? 0} / ${p?.stats.deaths ?? 0} / ${p?.stats.assists ?? 0}`;
                 return (
                   <div
-                    key={m.id}
+                    key={m.matchInfo.matchId}
                     className={`p-2.5 bg-[#141419] border border-white/[0.04] rounded-lg flex items-center justify-between gap-3 relative overflow-hidden ${
                       isWin ? 'bg-gradient-to-r from-[#2DD4BF]/[0.05] to-transparent' : 'bg-gradient-to-r from-[#F87171]/[0.05] to-transparent'
                     }`}
@@ -270,22 +322,22 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
                       <span className={`w-1.5 h-7 rounded-full shrink-0 ${isWin ? 'bg-[#2DD4BF]' : 'bg-[#F87171]'}`} />
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-xs text-white">{m.map}</span>
+                          <span className="font-medium text-xs text-white">{mapName}</span>
                           <span className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
                             isWin ? 'text-[#2DD4BF] bg-[#2DD4BF]/10' : 'text-[#F87171] bg-[#F87171]/10'
                           }`}>
-                            {m.score}
+                            {score}
                           </span>
                         </div>
                         <div className="text-[10px] text-[#9CA3AF] mt-0.5">
-                          {m.agent} · {m.date}
+                          {agent} · {formatGameDate(m.matchInfo.gameStartMillis)}
                         </div>
                       </div>
                     </div>
 
                     <div className="text-right font-mono-num text-xs">
-                      <span className="font-medium text-white">{m.kda}</span>
-                      <span className="text-[10px] text-[#9CA3AF] block">{m.acs} ACS</span>
+                      <span className="font-medium text-white">{kda}</span>
+                      <span className="text-[10px] text-[#9CA3AF] block">{p?.stats.score ?? 0} ACS</span>
                     </div>
                   </div>
                 );
@@ -293,34 +345,30 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
             </div>
           </div>
 
-          {/* Opening Duel Weapon Efficiency */}
+          {/* Weapon Performance */}
           <div className="bg-[#191920] border border-white/[0.06] rounded-xl p-4 shadow-sm w-full">
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-[#9CA3AF]" />
                 <h3 className="font-semibold text-sm text-white">
-                  Opening Duel Efficiency by Weapon
+                  Weapon Performance
                 </h3>
               </div>
-              <span className="text-xs text-[#9CA3AF]">Conversion</span>
+              <span className="text-xs text-[#9CA3AF]">Kills</span>
             </div>
 
             <div className="mt-3 space-y-2.5">
-              {openingWeaponStats.map((w) => (
+              {weaponStats.map((w) => (
                 <div key={w.weapon} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-medium text-white">{w.weapon}</span>
-                    <span className="font-mono-num text-[#2DD4BF] font-medium">{w.entryWr}% Win ({w.fb}W/{w.fd}L)</span>
+                    <span className="font-mono-num text-[#2DD4BF] font-medium">{w.kills} kills ({w.pct}%)</span>
                   </div>
                   <div className="w-full h-1.5 bg-[#111116] rounded-full overflow-hidden flex">
-                    <div 
-                      className="h-full bg-[#2DD4BF] rounded-full" 
-                      style={{ width: `${w.entryWr}%` }} 
+                    <div
+                      className="h-full bg-[#2DD4BF] rounded-full"
+                      style={{ width: `${w.pct}%` }}
                     />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-[#9CA3AF] font-mono-num">
-                    <span>{w.duels} Opening Engagements</span>
-                    <span>Avg Distance: {w.avgRange}</span>
                   </div>
                 </div>
               ))}
@@ -334,7 +382,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ player, onNavigateTo
               <span>Current Form Highlights</span>
             </div>
             <p className="text-xs text-[#9CA3AF] leading-relaxed">
-              Ascent Mid Courtyard entries remain your highest conversion zone (74% WR). Recommendation: maintain current default pace while syncing initiator recon on B-Main splits.
+              {player.mainAgent} {player.mainRole.toLowerCase()} · {player.winrate}% winrate · {player.firstBloodRatio}x first-blood ratio across {player.matchesPlayed} matches.
             </p>
           </div>
         </div>

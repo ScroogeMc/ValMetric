@@ -7,7 +7,7 @@ import {
   AnalyticsMode,
   MapId 
 } from '../types/valorant';
-import { MAP_CONFIGS } from '../data/mockData';
+import { MAP_CONFIGS } from '../data/mapProjection';
 import { ZoneTooltip } from './ZoneTooltip';
 import { 
   ZoomIn, 
@@ -52,7 +52,6 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
   const [hoveredZone, setHoveredZone] = useState<DuelZone | null>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [showCallouts, setShowCallouts] = useState(true);
-  const [showPlantBoxes, setShowPlantBoxes] = useState(true);
   const [zoomLevel, setZoomLevel] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -70,33 +69,13 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
     }
   };
 
-  // Filter zones by side
-  const filteredZones = zones.filter((zone) => {
-    if (activeSide !== 'all') {
-      if (activeSide === 'attack' && zone.side === 'defense') return false;
-      if (activeSide === 'defense' && zone.side === 'attack') return false;
-    }
-    return true;
-  });
-
-  // Calculate plant sites coordinates
-  const aSiteCallout = officialCallouts.find((c: any) => 
-    c.fullName.toLowerCase().includes('a site') || 
-    (c.regionName.toLowerCase() === 'site' && c.superRegionName === 'A')
-  ) || { pctX: currentMap === 'abyss' ? 48 : 35, pctY: currentMap === 'abyss' ? 15 : 14 };
-
-  const bSiteCallout = officialCallouts.find((c: any) => 
-    c.fullName.toLowerCase().includes('b site') || 
-    (c.regionName.toLowerCase() === 'site' && c.superRegionName === 'B')
-  ) || { pctX: currentMap === 'abyss' ? 40 : 28.5, pctY: currentMap === 'abyss' ? 86 : 73.7 };
-
   // Filter callouts so they don't clash under active duel zone circles
   const visibleCallouts = officialCallouts.filter((callout: any) => {
     const isKey = ['main', 'site', 'courtyard', 'market', 'wine', 'catwalk', 'tree', 'danger', 'library', 'bridge', 'lobby'].some(k => callout.fullName.toLowerCase().includes(k));
     if (!isKey && officialCallouts.length > 15) return false;
 
     if (activeMode === 'entry_zones') {
-      const isClashingWithZone = filteredZones.some((z) => {
+      const isClashingWithZone = zones.some((z) => {
         const dist = Math.hypot(z.pctX - callout.pctX, z.pctY - callout.pctY);
         return dist < 7;
       });
@@ -295,35 +274,6 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
               }}
             />
 
-            {/* Plant Sites Badges (Clean, Deferential Slate Tags) */}
-            {showPlantBoxes && (
-              <>
-                {aSiteCallout && (
-                  <div
-                    className="absolute -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none"
-                    style={{ left: `${aSiteCallout.pctX}%`, top: `${aSiteCallout.pctY}%` }}
-                  >
-                    <div className="px-2 py-0.5 bg-[#191920]/95 border border-white/20 text-zinc-200 font-semibold text-[10px] rounded shadow-md">
-                      Site A
-                    </div>
-                  </div>
-                )}
-                {bSiteCallout && (
-                  <div
-                    className="absolute -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none"
-                    style={{ 
-                      left: `${bSiteCallout.pctX}%`, 
-                      top: `${Math.max(5, bSiteCallout.pctY - 6.5)}%` 
-                    }}
-                  >
-                    <div className="px-2 py-0.5 bg-[#191920]/95 border border-white/20 text-zinc-200 font-semibold text-[10px] rounded shadow-md">
-                      Site B
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-
             {/* Architectural Callout Labels */}
             {showCallouts && (
               <div className="absolute inset-0 pointer-events-none">
@@ -342,7 +292,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({
             {/* WIDGET A: SOFT PASTEL OVERLAYS (Soft Teal #2DD4BF & Muted Coral #F87171) */}
             {activeMode === 'entry_zones' && (
               <div className="absolute inset-0 z-15">
-                {filteredZones.map((zone) => {
+                {zones.map((zone) => {
                   const isHovered = hoveredZone?.id === zone.id;
                   const isSelected = selectedZone?.id === zone.id;
                   const isPositive = zone.status === 'positive';

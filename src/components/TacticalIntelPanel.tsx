@@ -1,21 +1,27 @@
 import React from 'react';
 import { DuelZone } from '../types/valorant';
-import { 
-  Crosshair, 
-  Skull, 
-  Lightbulb,
-  TrendingUp
-} from 'lucide-react';
+import { FirstBloodStats } from '../data/metrics';
+import { getWeaponName } from '../data/mockMatches';
+import { Lightbulb } from 'lucide-react';
 
 interface TacticalIntelPanelProps {
   selectedZone: DuelZone | null;
+  zones: DuelZone[];
+  firstBloodStats: FirstBloodStats;
   onClearSelection: () => void;
 }
 
 export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
   selectedZone,
+  zones,
+  firstBloodStats,
   onClearSelection,
 }) => {
+  const entryWinrate = firstBloodStats.firstBloods + firstBloodStats.firstDeaths > 0
+    ? Math.round((100 * firstBloodStats.firstBloods) / (firstBloodStats.firstBloods + firstBloodStats.firstDeaths))
+    : 0;
+  const sectorRanking = [...zones].sort((a, b) => b.totalDuels - a.totalDuels).slice(0, 4);
+
   return (
     <div className="w-80 bg-[#111116] border-l border-white/[0.06] flex flex-col justify-between p-4 text-xs select-none shrink-0 overflow-y-auto font-sans-clean">
       {selectedZone ? (
@@ -90,13 +96,11 @@ export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
           {/* Primary Telemetry Grid */}
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl">
-              <span className="text-[10px] text-[#9CA3AF] block uppercase font-medium">Reaction Delta</span>
-              <span className={`text-lg font-mono-num font-semibold mt-0.5 block ${
-                selectedZone.avgReactionDeltaMs < 0 ? 'text-[#2DD4BF]' : 'text-[#F87171]'
-              }`}>
-                {selectedZone.avgReactionDeltaMs > 0 ? `+${selectedZone.avgReactionDeltaMs}ms` : `${selectedZone.avgReactionDeltaMs}ms`}
+              <span className="text-[10px] text-[#9CA3AF] block uppercase font-medium">First Contact</span>
+              <span className="text-lg font-mono-num font-semibold mt-0.5 block text-zinc-200">
+                {Math.round(selectedZone.avgReactionDeltaMs / 1000)}s
               </span>
-              <span className="text-[10px] text-[#9CA3AF] block">vs Tier median</span>
+              <span className="text-[10px] text-[#9CA3AF] block">Avg opening time</span>
             </div>
 
             <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl">
@@ -108,31 +112,21 @@ export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
             </div>
           </div>
 
-          {/* Opponent Weapon Distribution */}
+          {/* Enemy Weapons */}
           <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl space-y-2">
             <div className="text-[10px] text-[#9CA3AF] uppercase tracking-wider font-medium">
-              Enemy Weapon Casualties
+              Enemy Weapons
             </div>
-            <div className="space-y-2 text-xs">
-              <div>
-                <div className="flex items-center justify-between pb-1 text-[11px]">
-                  <span className="text-zinc-200">Operator (Sniper)</span>
-                  <span className="text-[#F87171] font-mono-num">67% (8 deaths)</span>
+            <div className="space-y-1 text-xs">
+              {(selectedZone.enemyWeapons ?? []).length === 0 && (
+                <p className="text-[#9CA3AF] text-[11px]">No enemy weapon data.</p>
+              )}
+              {(selectedZone.enemyWeapons ?? []).map((w) => (
+                <div key={w.weaponId} className="flex items-center justify-between">
+                  <span className="text-zinc-200">{getWeaponName(w.weaponId)}</span>
+                  <span className="text-[#F87171] font-mono-num">({w.count})</span>
                 </div>
-                <div className="w-full h-1 bg-[#111116] rounded-full overflow-hidden">
-                  <div className="bg-[#F87171] h-full rounded-full" style={{ width: '67%' }} />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between pb-1 pt-1 text-[11px]">
-                  <span className="text-zinc-200">Vandal (Rifle)</span>
-                  <span className="text-[#9CA3AF] font-mono-num">33% (4 deaths)</span>
-                </div>
-                <div className="w-full h-1 bg-[#111116] rounded-full overflow-hidden">
-                  <div className="bg-zinc-400 h-full rounded-full" style={{ width: '33%' }} />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -152,7 +146,7 @@ export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
         <div className="space-y-3.5">
           <div className="pb-2.5 border-b border-white/[0.06]">
             <div className="text-[10px] uppercase tracking-wider text-[#9CA3AF] font-medium">
-              Aggregate Intel // 5 Sessions
+              Aggregate Intel
             </div>
             <h3 className="font-semibold text-sm text-white mt-0.5">
               Opening Duel Overview
@@ -162,14 +156,14 @@ export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl">
               <span className="text-[10px] text-[#9CA3AF] uppercase block font-medium">Entry Efficiency</span>
-              <span className="text-xl font-mono-num font-semibold text-[#2DD4BF] mt-1 block">62.8%</span>
+              <span className="text-xl font-mono-num font-semibold text-[#2DD4BF] mt-1 block">{entryWinrate}%</span>
               <span className="text-[10px] text-[#9CA3AF]">Opening winrate</span>
             </div>
 
             <div className="bg-[#191920] p-3 border border-white/[0.06] rounded-xl">
               <span className="text-[10px] text-[#9CA3AF] uppercase block font-medium">First Blood Ratio</span>
-              <span className="text-xl font-mono-num font-semibold text-white mt-1 block">2.14x</span>
-              <span className="text-[10px] text-[#9CA3AF]">65 FB / 30 FD</span>
+              <span className="text-xl font-mono-num font-semibold text-white mt-1 block">{firstBloodStats.ratio}x</span>
+              <span className="text-[10px] text-[#9CA3AF]">{firstBloodStats.firstBloods} FB / {firstBloodStats.firstDeaths} FD</span>
             </div>
           </div>
 
@@ -180,47 +174,24 @@ export const TacticalIntelPanel: React.FC<TacticalIntelPanelProps> = ({
             </div>
 
             <div className="space-y-1.5 text-xs">
-              <div className="flex items-center justify-between p-2 bg-[#141419] rounded border border-white/[0.04]">
-                <div>
-                  <span className="text-zinc-200 font-medium block">1. Mid Courtyard</span>
-                  <span className="text-[10px] text-[#9CA3AF]">17 FB · 7 FD</span>
+              {sectorRanking.length === 0 && (
+                <p className="text-[#9CA3AF] text-[11px]">No sector telemetry yet.</p>
+              )}
+              {sectorRanking.map((zone, idx) => (
+                <div key={zone.id} className="flex items-center justify-between p-2 bg-[#141419] rounded border border-white/[0.04]">
+                  <div>
+                    <span className="text-zinc-200 font-medium block">{idx + 1}. {zone.callout}</span>
+                    <span className="text-[10px] text-[#9CA3AF]">{zone.firstBloods} FB · {zone.firstDeaths} FD</span>
+                  </div>
+                  <span className={`font-mono-num font-semibold ${zone.status === 'positive' ? 'text-[#2DD4BF]' : zone.status === 'negative' ? 'text-[#F87171]' : 'text-zinc-200'}`}>
+                    {zone.winrate}% WR
+                  </span>
                 </div>
-                <span className="font-mono-num font-semibold text-[#2DD4BF]">71% WR</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2 bg-[#141419] rounded border border-white/[0.04]">
-                <div>
-                  <span className="text-zinc-200 font-medium block">2. A Wine & Garden</span>
-                  <span className="text-[10px] text-[#9CA3AF]">7 FB · 2 FD</span>
-                </div>
-                <span className="font-mono-num font-semibold text-[#2DD4BF]">78% WR</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2 bg-[#141419] rounded border border-white/[0.04]">
-                <div>
-                  <span className="text-zinc-200 font-medium block">3. B Main Choke</span>
-                  <span className="text-[10px] text-[#9CA3AF]">6 FB · 12 FD</span>
-                </div>
-                <span className="font-mono-num font-semibold text-[#F87171]">34% WR</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2 bg-[#141419] rounded border border-white/[0.04]">
-                <div>
-                  <span className="text-zinc-200 font-medium block">4. B Market Window</span>
-                  <span className="text-[10px] text-[#9CA3AF]">4 FB · 10 FD</span>
-                </div>
-                <span className="font-mono-num font-semibold text-[#F87171]">29% WR</span>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       )}
-
-      {/* Persistent Bottom Hint */}
-      <div className="mt-3 pt-2.5 border-t border-white/[0.06] text-[11px] text-[#9CA3AF] flex items-center justify-between">
-        <span>Spatial Telemetry</span>
-        <span className="text-zinc-300">Select map sector to inspect</span>
-      </div>
     </div>
   );
 };

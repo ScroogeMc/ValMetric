@@ -4,8 +4,7 @@ import {
   Map as MapIcon, 
   Coins, 
   BrainCircuit, 
-  History, 
-  TrendingUp
+  History
 } from 'lucide-react';
 import { PlayerStats } from '../types/valorant';
 import { TactixLogo } from './TactixLogo';
@@ -21,7 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ player, currentTab, onTabChang
   const navItems = [
     { id: 'overview', label: 'Overview', icon: BarChart2 },
     { id: 'matches', label: 'Matches', icon: History },
-    { id: 'spatial', label: 'Spatial Analytics', icon: MapIcon, isPrimary: true },
+    { id: 'spatial', label: 'Spatial Analytics', icon: MapIcon },
     { id: 'economy', label: 'Economy & Utility', icon: Coins },
     { id: 'coaching', label: 'Tactical Coach', icon: BrainCircuit },
   ];
@@ -64,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ player, currentTab, onTabChang
                 <span className="font-mono-num text-[10px] text-zinc-300">128 tick</span>
               </div>
               <div className="text-[11px] text-zinc-300 mt-0.5 truncate">
-                {player.mainAgent} · Duelist
+                {player.mainAgent} · {player.mainRole}
               </div>
             </div>
           </div>
@@ -112,9 +111,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ player, currentTab, onTabChang
               </div>
               <div className="flex items-center justify-between text-[10px] text-[#9CA3AF] font-mono-num">
                 <span>{player.rr} / 1000 RR</span>
-                <span className="text-[#2DD4BF] flex items-center gap-0.5 font-sans font-medium">
-                  <TrendingUp className="w-3 h-3" />
-                  +24 RR today
+                <span className="text-[#2DD4BF] font-sans font-medium">
+                  {player.matchesPlayed} matches
                 </span>
               </div>
             </div>
@@ -148,10 +146,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ player, currentTab, onTabChang
                   />
                   <span>{item.label}</span>
                 </div>
-                
-                {item.isPrimary && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2DD4BF]" />
-                )}
               </button>
             );
           })}
