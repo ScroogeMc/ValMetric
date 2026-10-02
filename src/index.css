@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-sans-clean {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  }
+  .font-display {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  }
+  .font-outfit {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .font-tech {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .font-mono-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Subtle, deferential architectural blueprint grid with #111116 tone */
+.bg-blueprint-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Deferential Apple HIG Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
